@@ -1,0 +1,8 @@
+{
+  "name": "wallaby",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/cthierer/wallaby",
+  "author": "Chris Thierer <cthierer1@gmail.com>",
+  "license": "MIT"
+}
