@@ -2,7 +2,7 @@
   "auth": {
     "github": {
       "authorize_uri": "https://github.com/login/oauth/authorize",
-      "scope": "user:email",
+      "scope": "",
       "token_uri": "https://github.com/login/oauth/access_token",
       "user_uri": "https://api.github.com/user"
     }
