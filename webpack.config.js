@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-// const webpack = require('webpack')
+const webpack = require('webpack')
 const config = require('config')
 
 const host = config.get('wallaby.host')
@@ -43,11 +43,11 @@ module.exports = {
   },
   plugins: [
     // TODO
-    // new webpack.optimize.UglifyJsPlugin({
-    //   compress: {
-    //     warnings: false
-    //   }
-    // }),
-    // new webpack.optimize.DedupePlugin()
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
+    new webpack.optimize.DedupePlugin()
   ]
 }
