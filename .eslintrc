@@ -1,0 +1,17 @@
+{
+  "parser" : "babel-eslint",
+  "extends": "airbnb/base",
+  "rules" : {
+    "no-underscore-dangle": "off",
+    "semi": [2, "never"],
+    "comma-dangle": [2, "never"],
+    "radix": [2, "as-needed"],
+    "no-unused-vars": [2, {"args": "after-used", "argsIgnorePattern": "^_"}],
+    "no-unused-expressions": [2, { allowShortCircuit: true, allowTernary: true }],
+    "no-param-reassign": [2, {"props": false}]
+  },
+  "globals": {
+    "require": true
+  },
+  "plugins" : []
+}

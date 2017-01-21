@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <title>wallaby</title>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container">
+      <h1>wallaby</h1>
+      <nav class="user" data-is="wallaby-login">
+        <core-icon name="key" alt="login to github" width="18px" height="18px"></core-icon>
+        login
+      </nav>
+    </div>
+  </header>
+  <div class="hero">
+    <h2>bookmarklet</h2>
+    <p class="lead">
+      drag the following link into your bookmark toolbar:
+    </p>
+    <wallaby-bookmarklet>wallaby</wallaby-bookmarklet>
+    <p>
+      then, click it when reading a comic to load the application into
+      the toolbar.
+    </p>
+  </div>
+  <div class="container">
+    <h2>recent bookmarks</h2>
+    <wallaby-bookmarks></wallaby-bookmarks>
+  </div>
+  <script type="text/javascript" src="scripts/wallaby.js"></script>
+</body>
+</html>

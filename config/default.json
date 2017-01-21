@@ -1,0 +1,31 @@
+{
+  "auth": {
+    "github": {
+      "authorize_uri": "https://github.com/login/oauth/authorize",
+      "scope": "user:email",
+      "token_uri": "https://github.com/login/oauth/access_token",
+      "user_uri": "https://api.github.com/user"
+    }
+  },
+  "redis": {
+    "connection": {}
+  },
+  "wallaby": {
+    "base_path": "",
+    "app_name": "wallaby",
+    "providers": [
+      {
+        "key": "github",
+        "title": "Github",
+        "endpoint": "/auth/github"
+      }
+    ],
+    "endpoints": {
+      "config": "/config",
+      "sessions": "/sessions",
+      "bookmarks": "/bookmarks"
+    },
+    "app_src": "/scripts/wallaby.js",
+    "rocket_uri": "https://read.marvel.com/#/book"
+  }
+}

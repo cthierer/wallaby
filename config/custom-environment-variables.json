@@ -1,0 +1,12 @@
+{
+  "auth": {
+    "github": {
+      "client_id": "GH_CLIENT_ID",
+      "client_secret": "GH_CLIENT_SECRET",
+      "redirect_uri": "GH_REDIRECT_URI"
+    }
+  },
+  "wallaby": {
+    "host": "HOST"
+  }
+}

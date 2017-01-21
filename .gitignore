@@ -1,1 +1,7 @@
+.nyc_output
+config/local.json
+coverage
+dist
+doc
+lib
 node_modules

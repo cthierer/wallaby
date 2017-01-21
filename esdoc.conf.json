@@ -1,0 +1,19 @@
+{
+  "source": "./src",
+  "destination" : "./doc",
+  "includes": ["\\.(js)$"],
+  "access": ["public", "protected", "private"],
+  "autoPrivate": true,
+  "unexportIdentifier": false,
+  "undocumentIdentifier": true,
+  "builtinExternal": true,
+  "index": "./README.md",
+  "package": "./package.json",
+  "coverage": false,
+  "includeSource": true,
+  "title": "redtail",
+  "plugins": [
+    {"name": "esdoc-es7-plugin"}
+  ],
+  "lint": true
+}

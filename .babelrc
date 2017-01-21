@@ -1,0 +1,13 @@
+{
+  "env": {
+    "server": {
+      "presets": ["es2015-node6", "async-to-bluebird"]
+    },
+    "client": {
+      "presets": ["es2015-riot", "async-to-bluebird"],
+      "plugins": [
+        ["transform-es2015-modules-commonjs", { "allowTopLevelThis": true }]
+      ]
+    }
+  }
+}

@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+  <title>auth | wallaby</title>
+  <script type="text/javascript">
+    const token = "{{ token }}"
+    const username = "{{ username }}"
+    const provider = "{{ provider }}"
+    const referer = "{{ referer }}"
+    if (window.opener) {
+      window.opener.postMessage({ token, username, provider }, referer)
+    }
+  </script>
+</head>
+<body>
+  <h1>success!</h1>
+  <p>
+    this window should be closed automatically, and you should be redirected
+    back to <a href="{{ referer }}">{{ referer }}</a>.
+  </p>
+</body>
+</html>
