@@ -1,5 +1,4 @@
 <wallaby-bookmark-button>
-  <!-- <core-notification type="info" message="lorem ipsum"></core-notification> -->
   <span data-is="core-icon" class="toolbar-icon { disabled: opts.disabled }"
     show={ opts.state.auth }
     name="bookmark"
@@ -55,8 +54,8 @@
       }, opts.state.auth)
         .then(() => {
           const position = smartPanel
-            ? `at page ${page + 1}, panel ${panel + 1}`
-            : `at page ${page + 1}`
+            ? `at page ${page}, panel ${panel}`
+            : `at page ${page}`
           this.notify('info', `Created bookmark ${position}.`)
         })
         .catch((err) => {
