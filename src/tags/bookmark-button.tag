@@ -15,16 +15,45 @@
       height="35px"></span>
   </span>
   <script type="es6">
+    this.app = null
+    this.models = null
+    this.controls = null
+    this.model = null
+
+    this.one('mount', () => {
+      this.app = window.rocket || {}
+      this.models = this.app.models || {}
+      this.controls = this.models.controlsModel || {}
+      this.model = this.models.model || {}
+
+      const refreshSession = (target, thisArg, args) => {
+        this.wallaby.pingSession(opts.state.auth)
+          .then(() => { opts.state.trigger('update') })
+          .catch(() => { opts.state.trigger('update') })
+        return target.apply(thisArg, args)
+      }
+
+      if (typeof this.controls.goToNext === 'function') {
+        const nextPageProxy = new Proxy(this.controls.goToNext, {
+          apply: refreshSession
+        })
+        this.controls.goToNext = nextPageProxy
+      }
+
+      if (typeof this.controls.goToPrevious === 'function') {
+        const prevPageProxy = new Proxy(this.controls.goToPrevious, {
+          apply: refreshSession
+        })
+        this.controls.goToPrevious = prevPageProxy
+      }
+    })
+
     this.saveBookmark = () => {
-      const app = window.rocket || {}
-      const models = app.models || {}
-      const controls = models.controlsModel || {}
-      const model = models.model || {}
-      const loc = model.loc || {}
-      const controlsAttributes = controls.attributes || {}
+      const loc = this.model.loc || {}
+      const controlsAttributes = this.controls.attributes || {}
       const smartPanel = controlsAttributes.smartPanel || false
 
-      const id = model.id
+      const id = this.model.id
       const page = loc.pageIdx
       const panel = loc.panelIdx
 

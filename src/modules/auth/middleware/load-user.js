@@ -1,7 +1,7 @@
 
 import { userSession } from '../data-keys'
 
-function initLoadUser(redis, sessionDuration = 20 * 60) {
+function initLoadUser(redis, sessionDuration) {
   return async function loadUser(ctx, next) {
     const headers = ctx.headers || {}
     const auth = headers.authorization || null

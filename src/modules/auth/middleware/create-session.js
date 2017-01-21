@@ -2,7 +2,7 @@
 import crypto from 'crypto'
 import { userSession } from '../data-keys'
 
-function initCreateSession(redis, duration = 20 * 60) {
+function initCreateSession(redis, duration) {
   return async function createSession(ctx, next) {
     const auth = ctx.state.auth || {}
     const provider = auth.provider

@@ -39,7 +39,7 @@ router.get('/auth/github/callback',
   }),
   lookupUser(config.get('auth.github.user_uri')),
   createUser(redis),
-  createSession(redis),
+  createSession(redis, config.get('auth.timeout')),
   ctx => ctx.render('auth-success', {
     token: ctx.state.session.token,
     username: ctx.state.user.username,
@@ -48,26 +48,26 @@ router.get('/auth/github/callback',
   }))
 
 router.put('/sessions',
-  loadUser(redis),
+  loadUser(redis, config.get('auth.timeout')),
   (ctx) => {
     const user = ctx.state.user || {}
     ctx.status = user.id ? 204 : 404
   })
 
 router.delete('/sessions',
-  loadUser(redis),
+  loadUser(redis, config.get('auth.timeout')),
   removeSession(redis))
 
 router.get('/bookmarks',
-  loadUser(redis),
+  loadUser(redis, config.get('auth.timeout')),
   listBookmarks(redis))
 
 router.post('/bookmarks/:id',
-  loadUser(redis),
+  loadUser(redis, config.get('auth.timeout')),
   createBookmark(redis))
 
 router.delete('/bookmarks/:id',
-  loadUser(redis),
+  loadUser(redis, config.get('auth.timeout')),
   bookmarkExists(redis),
   removeBookmark(redis))
 
