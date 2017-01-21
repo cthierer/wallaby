@@ -2,32 +2,60 @@
 <html>
 <head>
   <title>wallaby</title>
+  <meta name="viewport" content="initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <link rel="stylesheet" href="vendor/simple-grid.min.css">
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <header class="navbar">
-    <div class="container">
-      <h1>wallaby</h1>
-      <nav class="user" data-is="wallaby-login">
-        <core-icon name="key" alt="login to github" width="18px" height="18px"></core-icon>
-        login
-      </nav>
+  <div class="wrapper">
+    <header class="navbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-8-sm">
+            <span data-is="core-icon" class="logo" name="bookmark" height="45px" width="45px"></span>
+            <h1 class="title">wallaby</h1>
+          </div>
+          <div class="col-4-sm text-right">
+            <nav class="user" data-is="wallaby-login">
+              <core-icon name="key" alt="login to github" width="18px" height="18px"></core-icon>
+              login
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="hero">
+      <div class="container">
+        <h2 class="title">bookmarklet</h2>
+        <p class="lead">
+          drag the following link into your bookmark toolbar:
+        </p>
+        <wallaby-bookmarklet>wallaby</wallaby-bookmarklet>
+        <p>
+          then, click it when reading a comic to load the application into
+          the toolbar.
+        </p>
+        <small>
+          or, just check out <a href="/sample.html">the sample</a>.
+        </small>
+      </div>
     </div>
-  </header>
-  <div class="hero">
-    <h2>bookmarklet</h2>
-    <p class="lead">
-      drag the following link into your bookmark toolbar:
-    </p>
-    <wallaby-bookmarklet>wallaby</wallaby-bookmarklet>
-    <p>
-      then, click it when reading a comic to load the application into
-      the toolbar.
-    </p>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2>recent bookmarks</h2>
+        </div>
+      </div>
+      <wallaby-bookmarks></wallaby-bookmarks>
+    </div>
   </div>
-  <div class="container">
-    <h2>recent bookmarks</h2>
-    <wallaby-bookmarks></wallaby-bookmarks>
-  </div>
+  <footer class="page-footer">
+    <div class="container">
+      <a href="https://github.com/cthierer/wallaby">
+        <core-icon name="mark-github" width="32px" height="32px" alt="github repo"></core-icon>
+      </a>
+    </div>
+  </footer>
   <script type="text/javascript" src="scripts/wallaby.js"></script>
 </body>
 </html>

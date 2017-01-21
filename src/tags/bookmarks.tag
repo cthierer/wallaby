@@ -1,13 +1,20 @@
 <wallaby-bookmarks>
   <div class="list">
-    <wallaby-bookmark each={ bookmark in opts.state.bookmarks || [] }
+    <div data-is="wallaby-bookmark" each={ bookmark in opts.state.bookmarks || [] }
       doc-id={ bookmark.id }
       page={ bookmark.page }
       panel={ bookmark.panel }
       smartpanel={ bookmark.smartPanel }
       meta={ bookmark.meta }
       state={ parent.opts.state }>
-    </wallaby-bookmark>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <p class="lead" hide={ opts.state.bookmarks && opts.state.bookmarks.length }>
+        none.
+      </p>
+    </div>
   </div>
   <script type="es6">
     this.loading = false
@@ -37,4 +44,13 @@
       }
     })
   </script>
+  <style scoped>
+    .list > * {
+      margin-bottom: 1.5rem;
+    }
+
+    .list > a:last-child {
+      margin-bottom: 0;
+    }
+  </style>
 </wallaby-bookmarks>

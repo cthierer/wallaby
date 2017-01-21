@@ -69,6 +69,10 @@
       margin-right: 8px;
     }
 
+    .notification .icon svg.core-icon {
+      vertical-align: bottom;
+    }
+
     @media (min-width: 768px) {
       .notification {
         width: 60%;
