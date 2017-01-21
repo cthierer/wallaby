@@ -36,7 +36,7 @@ function initLoadUser(redis, sessionDuration = 20 * 60) {
       provider
     }
 
-    ctx.state.auth = {
+    ctx.state.session = {
       token,
       provider
     }

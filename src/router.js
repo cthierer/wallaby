@@ -41,7 +41,7 @@ router.get('/auth/github/callback',
   createUser(redis),
   createSession(redis),
   ctx => ctx.render('auth-success', {
-    token: ctx.state.auth.token,
+    token: ctx.state.session.token,
     username: ctx.state.user.username,
     referer: ctx.state.auth.referer,
     provider: 'github'

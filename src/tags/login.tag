@@ -19,16 +19,11 @@
       window.addEventListener('message', (e) => {
         const origin = event.origin || event.originalEvent.origin
 
-        console.log('origin', origin)
-        console.log('host', this.wallaby.config.host)
-
         if (origin !== this.wallaby.config.host) {
           return
         }
 
         const data = e.data
-
-        console.log('data', data)
 
         if (data.token && data.provider) {
           opts.state.auth = data
