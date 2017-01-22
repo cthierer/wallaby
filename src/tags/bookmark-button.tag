@@ -29,7 +29,7 @@
       const refreshSession = (target, thisArg, args) => {
         this.wallaby.pingSession(opts.state.auth)
           .then(() => { opts.state.trigger('update') })
-          .catch(() => { opts.state.trigger('update') })
+          .catch(() => { opts.state.trigger('destroy') })
         return target.apply(thisArg, args)
       }
 
