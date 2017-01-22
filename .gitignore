@@ -7,3 +7,4 @@ lib
 node_modules
 *.rdb
 *.log
+*.zip
