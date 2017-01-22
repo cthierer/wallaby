@@ -1,3 +1,10 @@
 language: node_js
 env:
-  - NODE_ENV=production NPM_CONFIG_PRODUCTION=false
+- NODE_ENV=production NPM_CONFIG_PRODUCTION=false
+deploy:
+  provider: heroku
+  api_key:
+    secure: ERgk1kNGRyzfb1MIXh3f9epyKX51cDBdegTUf28nIVfmizPi4AmjeSGGT4Or4N5ZsdQX44JnDXeHnwtPq7ckO+i8p7GZSyqQ7V03Iy3jOoOluUiJ7AK9KQpOkG4r0vfcudjGqzk0Xxkd6jmwnvAg445PkViyRNTeGZuezSRaKInqhB3ef3PK8N2oUq3ymw3dFyfTN35X/rN4h1dxuUpQDsbLkNb46XT0Ujld1AtbSKPm+f51ORsoC42puErwS7ITDD4l9cLbAe8nyxYYEOBdrB5DT4QvRxntawkAnA++AfNZ7Bkp63/1QhwTvz03O2+aEk73XWE4656ySDyh/Po7rQ2xI45bJHAMCvvp2dVItHFYj2jHn6zzPY2jGIobymPRKBiwQ5e/vDVP0f8DaFWABasccQ8Ko2vvl3/hdAA3vhHhgMcnIM+dcAcIKBlv48vF7RyrLKB03LPUu/++JxzZ7YMeH9Nw8f9mKt9zssI01xRIfWoB3wOh0utA0Z7Hd5SYxF8dpOLbpbSemBHE1VcYIZ1qm7SFuqFLZFCUWyj4lqDf53nLo/6YlIA4rX3Rj1ISxh645L4rjON5ozCBodlpzCMF4ikKbWtHhAz5xx+Z/6nIH8Eea2Dlguts1P4RXr9ZQKu5paL839xZC6l5vlv9IlSC6TDvfZ6YAdmvsrAB1hI=
+  app:
+    master: secret-earth-30212
+  skip_cleanup: true
