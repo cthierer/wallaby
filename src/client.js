@@ -44,7 +44,7 @@ function loadToolbar(api) {
 
 getClient('API_CONFIG_URL')
   .then(async (client) => {
-    const initialState = await client.loadStateString(sessionStorage.getItem('wallaby:state'))
+    const initialState = await client.loadStateString(localStorage.getItem('wallaby:state'))
     const config = client.config
     const state = riot.observable(initialState)
     const api = { state, config }
@@ -53,13 +53,13 @@ getClient('API_CONFIG_URL')
     window.wallaby = { state, config }
 
     state.on('destroy', () => {
-      sessionStorage.removeItem('wallaby:state')
+      localStorage.removeItem('wallaby:state')
       Object.keys(state).forEach(key => delete state[key])
       state.trigger('update')
     })
 
     state.on('update', () => {
-      sessionStorage.setItem('wallaby:state', JSON.stringify(state))
+      localStorage.setItem('wallaby:state', JSON.stringify(state))
     })
 
     riot.mixin({ wallaby: client })
