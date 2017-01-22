@@ -5,7 +5,6 @@
   "main": "app/index.js",
   "scripts": {
     "prepublish": "run-p build",
-    "prebuild": "run-p test",
     "build": "run-p build:*",
     "prebuild:client": "run-p clean:client",
     "build:client": "BABEL_ENV=client run-s build:client:*",
@@ -27,7 +26,7 @@
     "test:unit": "nyc mocha --recursive ./test/unit",
     "posttest:unit": "nyc --lines 90 --statements 90 report --reporter=lcov --reporter=json-summary",
     "test:lint": "eslint --ext .js src",
-    "watch": "nodemon --watch src --watch site -e js,tag,html,css --exec './node_modules/.bin/run-s build serve'",
+    "watch": "nodemon --watch src --watch site -e js,tag,html,css --exec './node_modules/.bin/run-s test build restart'",
     "serve": "http-server -p 3000 ./dist"
   },
   "repository": {
