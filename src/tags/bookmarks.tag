@@ -21,6 +21,11 @@
 
     this.loadBookmarks = () => {
       opts.state.bookmarks = null
+
+      if (!opts.state.auth) {
+        return
+      }
+
       this.loading = true
       this.wallaby.getBookmarks(opts.state.auth)
         .then((bookmarks) => {
