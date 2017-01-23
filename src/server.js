@@ -1,3 +1,7 @@
+/**
+ * @module wallaby/server
+ */
+
 import path from 'path'
 import Koa from 'koa'
 import views from 'koa-views'

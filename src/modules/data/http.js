@@ -1,5 +1,5 @@
 /**
- * @module redtail/modules/data/http
+ * @module wallaby/modules/data/http
  */
 
 import * as popsicle from 'popsicle'

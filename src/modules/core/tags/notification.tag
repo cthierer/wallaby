@@ -82,6 +82,7 @@
   </style>
   <script type="es6">
     this.on('mount', () => {
+      // automatically close the notification after 30 seconds
       setTimeout(() => this.close(), 30000)
     })
 

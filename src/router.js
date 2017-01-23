@@ -1,3 +1,6 @@
+/**
+ * @module wallaby/router
+ */
 
 import Router from 'koa-router'
 import config from 'config'
@@ -17,6 +20,10 @@ import removeBookmark from './modules/bookmarks/middleware/remove'
 const router = new Router()
 const redis = getClient(config.get('redis.connection'))
 
+/* ****************************************************************************
+ * Expose clint configuration
+ * ****************************************************************************/
+
 router.get('/config', (ctx) => {
   const appConfig = config.get('wallaby')
   const host = config.get('wallaby.host')
@@ -25,12 +32,18 @@ router.get('/config', (ctx) => {
   ctx.body = Object.assign({}, appConfig, { base_uri: baseUri })
 })
 
+/* ****************************************************************************
+ * Github Oauth handlers
+ * ****************************************************************************/
+
+// initialize
 router.get('/auth/github', initOauth(redis, config.get('auth.github.authorize_uri'), {
   client_id: config.get('auth.github.client_id'),
   redirect_uri: config.get('auth.github.redirect_uri'),
   scope: config.get('auth.github.scope')
 }))
 
+// oauth callback
 router.get('/auth/github/callback',
   getToken(redis, config.get('auth.github.token_uri'), {
     client_id: config.get('auth.github.client_id'),
@@ -47,6 +60,11 @@ router.get('/auth/github/callback',
     provider: 'github'
   }))
 
+/* ****************************************************************************
+ * Application session management
+ * ****************************************************************************/
+
+// update session timeout (extend the session)
 router.put('/sessions',
   loadUser(redis, config.get('auth.timeout')),
   (ctx) => {
@@ -54,18 +72,26 @@ router.put('/sessions',
     ctx.status = user.id ? 204 : 404
   })
 
+// logout
 router.delete('/sessions',
   loadUser(redis, config.get('auth.timeout')),
   removeSession(redis))
 
+/* ****************************************************************************
+ * Bookmarks
+ * ****************************************************************************/
+
+// get all bookmarks (paginated)
 router.get('/bookmarks',
   loadUser(redis, config.get('auth.timeout')),
   listBookmarks(redis))
 
+// create a new bookmark
 router.post('/bookmarks/:id',
   loadUser(redis, config.get('auth.timeout')),
   createBookmark(redis))
 
+// delete an existing bookmark
 router.delete('/bookmarks/:id',
   loadUser(redis, config.get('auth.timeout')),
   bookmarkExists(redis),

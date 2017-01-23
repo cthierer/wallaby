@@ -22,6 +22,7 @@
     this.loadBookmarks = () => {
       opts.state.bookmarks = null
 
+      // only load bookmarks if logged in
       if (!opts.state.auth) {
         return
       }

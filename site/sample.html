@@ -37,10 +37,79 @@
       text-align: center;
       width: 60%;
     }
+
+    .instructions {
+      background-color: #f7f7f7;
+      border-radius: 5px;
+      font-family: monospace;
+      font-size: 1rem;
+      left: 0;
+      max-height: 75%;
+      margin-left: 10px;
+      margin-right: 10px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      padding-right: 15px;
+      position: fixed;
+      opacity: .8;
+      overflow-y: scroll;
+      text-align: left;
+      width: calc(99.999% - 20px);
+    }
+
+    @media (min-width: 720px) {
+      .instructions {
+        width: 40%;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="feature"></div>
+  <div class="feature">
+    <ol class="instructions">
+      <li>
+        <p>
+          create a bookmarklet by dragging the button from the
+          <a href="index.html">home page</a> to your browser's bookmark bar.
+        </p>
+      </li>
+      <li>
+        <p>
+          on this page, click on the bookmarklet to load the application.
+          this is similar to how the application would be loaded in the
+          comic reader.
+        </p>
+        <p>
+          <strong>a new button should be added to the toolbar below.</strong>
+        </p>
+      </li>
+      <li>
+        <p>
+          if the icon is a <strong>key</strong>, then you must authenticate -
+          click the key to open a new window and log into GitHub.
+        </p>
+        <small>
+          the application only keeps your GitHub username and user ID.
+        </small>
+      </li>
+      <li>
+        <p>
+          once logged in, a <strong>bookmark</strong> icon should appear in the
+          toolbar - clicking it will save a new bookmark.
+        </p>
+        <small>
+          the sample application includes hardcoded page and metadata values
+          for testing only - other functionality does not work.
+        </small>
+      </li>
+      <li>
+        <p>
+          return to the <a href="index.html">home page</a> and check that the
+          new bookmark was added to the "recent bookmarks" list.
+        </p>
+      </li>
+    </ol>
+  </div>
   <section id="footer">
     <footer class="panel-on">
       <nav>

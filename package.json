@@ -16,6 +16,7 @@
     "build:server": "BABEL_ENV=server babel src -d lib --copy-files",
     "prebuild:doc": "run-p clean:doc",
     "build:doc": "esdoc -c esdoc.conf.json",
+    "postbuild:doc": "mkdir -p dist/docs && cp -r doc/* dist/docs",
     "clean": "run-p clean:*",
     "clean:client": "rimraf dist",
     "clean:server": "rimraf lib",
