@@ -1,5 +1,6 @@
 {
   "wallaby": {
-    "host": "https://secret-earth-30212.herokuapp.com"
+    "host": "https://secret-earth-30212.herokuapp.com",
+    "app_src": "https://wallaby.builds.solutions/scripts/wallaby.js"
   }
 }
