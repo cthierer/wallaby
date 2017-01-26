@@ -31,11 +31,17 @@
       // takes action within the reader application
       // this serves to keep the session alive while the user is reading
       const refreshSession = (target, thisArg, args) => {
-        this.wallaby.pingSession(opts.state.auth)
-          // session still good
-          .then(() => { opts.state.trigger('update') })
-          // session expired - log the user out
-          .catch(() => { opts.state.trigger('destroy') })
+        if (opts.state.auth) {
+          this.wallaby.pingSession(opts.state.auth)
+            .then((status) => {
+              if (status !== true) {
+                opts.state.trigger('destroy')
+                return
+              }
+              opts.state.trigger('update')
+            })
+            .catch(() => { opts.state.trigger('destroy') })
+        }
         return target.apply(thisArg, args)
       }
 
