@@ -107,8 +107,8 @@
         // success
         .then(() => {
           const position = smartPanel
-            ? `at page ${page}, panel ${panel}`
-            : `at page ${page}`
+            ? `at page ${page + 1}, panel ${panel + 1}`
+            : `at page ${page + 1}`
           this.notify('info', `Created bookmark ${position}.`)
         })
         // failure

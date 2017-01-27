@@ -37,7 +37,13 @@ function initList(redis, defaultLimit = 10, defaultOffset = 0) {
 
     if (bookmarkIds && bookmarkIds.length) {
       const bookmarks = await redis.hmgetAsync(userBookmarks(user), bookmarkIds)
-      const result = bookmarks.map(bookmarkStr => JSON.parse(bookmarkStr))
+      const result = bookmarks
+        .map(bookmarkStr => JSON.parse(bookmarkStr))
+        .map(bookmark => Object.assign(bookmark, {
+          // database stores index, but expose actual values to client
+          page: bookmark.page + 1,
+          panel: bookmark.panel + 1
+        }))
 
       ctx.body = {
         status: 'ok',

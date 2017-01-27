@@ -12,6 +12,7 @@ Changelog
 * Navigating after the session expired did not allow the user to
   re-authenticate. (reader)
 * Sample page and authentication success page are not responsive. (mobile)
+* Page numbers are 1 less than expected value. (api)
 
 ### Features
 
