@@ -13,6 +13,7 @@ Changelog
   re-authenticate. (reader)
 * Sample page and authentication success page are not responsive. (mobile)
 * Page numbers are 1 less than expected value. (api)
+* Retrieving bookmarks with `limit=10` returns 11 results. (api)
 
 ### Features
 

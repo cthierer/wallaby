@@ -32,7 +32,7 @@ function initList(redis, defaultLimit = 10, defaultOffset = 0) {
     }
 
     const bookmarkIds = await redis.zrevrangeAsync(userHistory(user),
-      offset >= 0 ? offset : defaultOffset, limit >= 0 ? limit : defaultLimit)
+      offset >= 0 ? offset : defaultOffset, limit > 0 ? (limit - 1) : defaultLimit)
     const total = await redis.hlenAsync(userBookmarks(user))
 
     if (bookmarkIds && bookmarkIds.length) {
