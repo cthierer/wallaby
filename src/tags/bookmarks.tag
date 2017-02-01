@@ -6,6 +6,7 @@
       panel={ bookmark.panel }
       smartpanel={ bookmark.smartPanel }
       meta={ bookmark.meta }
+      updated-at={ bookmark.updatedAt }
       state={ parent.opts.state }>
     </div>
   </div>

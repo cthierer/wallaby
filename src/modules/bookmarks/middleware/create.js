@@ -19,8 +19,12 @@ import { userHistory, userBookmarks } from '../data-keys'
  */
 function initCreate(redis) {
   return async function createBookmark(ctx) {
+    const timestamp = Date.now()
     const id = ctx.params.id
-    const data = Object.assign(ctx.request.body || {}, { id })
+    const data = Object.assign(ctx.request.body || {}, {
+      id,
+      updatedAt: (new Date(timestamp)).toISOString()
+    })
     const user = ctx.state.user
 
     if (!id) {
@@ -43,7 +47,7 @@ function initCreate(redis) {
        * The Bookmark ID is also added to a sorted set tracked by timestamp,
        * allowing users to request the most recent Bookmarks.
        */
-      redis.zaddAsync(userHistory(user), Date.now(), id)
+      redis.zaddAsync(userHistory(user), timestamp, id)
     ])
 
     ctx.status = 201

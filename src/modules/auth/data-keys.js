@@ -70,4 +70,9 @@ function authReferer(state) {
   return `${REFERERS}:${state}`
 }
 
-export { userSession, userProfile, authReferer }
+export {
+  userSession,
+  userProfile,
+  authReferer,
+  USERS as KEY_USERS
+}

@@ -22,6 +22,7 @@
     "clean:server": "rimraf lib",
     "clean:doc": "rimraf doc",
     "clean:coverage": "rimraf coverage",
+    "data:migrate": "node ./lib/migrate",
     "test": "run-s test:lint test:unit",
     "pretest:unit": "run-p clean:coverage",
     "test:unit": "nyc mocha --recursive ./test/unit",
@@ -86,10 +87,12 @@
     "koa-router": "^7.0.1",
     "koa-static": "^3.0.0",
     "koa-views": "^5.2.0",
+    "moment": "^2.17.1",
     "octicons": "^5.0.1",
     "popsicle": "^9.0.0",
     "redis": "^2.6.5",
     "riot": "^3.0.7",
+    "semver": "^5.3.0",
     "uuid": "^3.0.1"
   }
 }

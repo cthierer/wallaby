@@ -1,6 +1,7 @@
 /* eslint-env browser */
 
 import riot from 'riot/riot'
+import moment from 'moment'
 import initCore from './modules/core/tags/init'
 import getClient from './wallaby'
 
@@ -91,6 +92,7 @@ getClient('API_CONFIG_URL')
 
     riot.mixin({ wallaby: client })
     riot.mixin({ notify })
+    riot.mixin('moment', moment)
 
     await initCore(riot)
 

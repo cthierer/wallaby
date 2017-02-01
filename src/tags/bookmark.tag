@@ -14,6 +14,9 @@
       <p if={ opts.meta.description } class="description">
         { opts.meta.description }
       </p>
+      <p if={ opts.updatedAt } class="date sub">
+        bookmarked { moment(opts.updatedAt).fromNow() }
+      </p>
       <div class="toolbar">
         <a class="button" href="#" onclick={ remove }>
           <core-icon name="trashcan" width="24px" height="24px"></core-icon>
@@ -23,6 +26,7 @@
     </div>
   </div>
   <script type="es6">
+    this.moment = riot.mixin('moment')
     this.getHref = () => `${this.wallaby.config.rocket_uri}/${opts.docId}?page=${opts.page}&panel=${opts.panel}&smartpanel=${opts.smartpanel ? 1 : 0}`
 
     this.remove = () => {
@@ -44,6 +48,10 @@
       width: 100%;
     }
 
+    .sub {
+      font-size: 1rem;
+    }
+
     h3.title {
       font-size: 1.5rem;
       margin-top: 0;
@@ -51,7 +59,6 @@
 
     .title .sub {
       display: block;
-      font-size: 1rem;
     }
 
     .button svg.core-icon {
