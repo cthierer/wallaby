@@ -2,7 +2,7 @@
  * @module wallaby/modules/bookmarks/middleware/create
  */
 
-import { userHistory, userBookmarks } from '../data-keys'
+import { saveBookmark } from '../data-utils'
 
 /**
  * Initialize middleware to create a new Bookmark.
@@ -19,12 +19,9 @@ import { userHistory, userBookmarks } from '../data-keys'
  */
 function initCreate(redis) {
   return async function createBookmark(ctx) {
-    const timestamp = Date.now()
     const id = ctx.params.id
-    const data = Object.assign(ctx.request.body || {}, {
-      id,
-      updatedAt: (new Date(timestamp)).toISOString()
-    })
+    const updatedAt = (new Date()).toISOString()
+    const data = Object.assign(ctx.request.body || {}, { id, updatedAt })
     const user = ctx.state.user
 
     if (!id) {
@@ -35,20 +32,7 @@ function initCreate(redis) {
       throw new Error('missing user')
     }
 
-    await Promise.all([
-      /*
-       * Bookmarks are linked to the user, and stored a JSON strings on a hash
-       * identified by the Bookmark ID. Only one Bookmark can exist per an ID,
-       * meaning that if the user creates multiple Bookmarks for a single ID,
-       * only the last will be peristed.
-       */
-      redis.hsetAsync(userBookmarks(user), id, JSON.stringify(data)),
-      /*
-       * The Bookmark ID is also added to a sorted set tracked by timestamp,
-       * allowing users to request the most recent Bookmarks.
-       */
-      redis.zaddAsync(userHistory(user), timestamp, id)
-    ])
+    await saveBookmark(data, user, redis)
 
     ctx.status = 201
     ctx.body = {

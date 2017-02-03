@@ -20,7 +20,7 @@
       <div class="toolbar">
         <a class="button" href="#" onclick={ remove }>
           <core-icon name="trashcan" width="24px" height="24px"></core-icon>
-          Delete
+          delete
         </a>
       </div>
     </div>

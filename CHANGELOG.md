@@ -20,3 +20,4 @@ Changelog
 * Add favicons and touch icons.
 * Store and return "updatedAt" value with bookmarks. This string tracks the
   date and time that the bookmark was last updated.
+* Import and export bookmarks through the web UI and API.

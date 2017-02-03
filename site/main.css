@@ -7,6 +7,55 @@ h2 {
   margin-bottom: 0;
 }
 
+ul.inline,
+ul.no-bullets {
+  padding: 0;
+}
+
+ul.inline > li {
+  display: inline;
+  margin-right: 12px;
+}
+
+ul.inline > li:last-child {
+  margin-right: 0;
+}
+
+ul.no-bullets > li {
+  list-style: none;
+}
+
+.button {
+  background-color: transparent;
+  border: none;
+  border: 1px solid #333;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 4px 8px;
+}
+
+.button .core-icon {
+  fill: #2b76cb;
+  margin-right: 4px;
+  height: 18px;
+  vertical-align: bottom;
+  width: 18px;
+}
+
+.button:hover,
+.button:focus {
+  background-color: #2b76cb;
+  border-color: #2b76cb;
+  color: #fff;
+  text-decoration: underline;
+}
+
+.button:hover .core-icon,
+.button:focus .core-icon {
+  fill: #fff;
+}
+
 .wrapper {
   background-color: #fff;
   padding-bottom: 26px;

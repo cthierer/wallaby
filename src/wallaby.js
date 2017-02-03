@@ -128,6 +128,32 @@ class WallabyClient {
   }
 
   /**
+   * Generate an export of all bookmarks in the application.
+   * @param {object} auth
+   * @returns {array} Result of the API call: an array of bookmark objects.
+   */
+  async exportBookmarks(auth) {
+    const url = `${this.bookmarksUri}/export`
+    const headers = _buildHeaders(auth)
+
+    return getDataAsJSON({ url, headers })
+  }
+
+  /**
+   * Import multiple bookmarks into the application.
+   * @param {object} auth
+   * @param {array} bookmarks Collection of bookmark objects to import.
+   * @returns {object} Result of the API call, including a `total` attribute
+   *  enumerating the number of boomkarks imported.
+   */
+  async importBookmarks(auth, bookmarks) {
+    const url = `${this.bookmarksUri}/import`
+    const headers = _buildHeaders(auth)
+
+    return postDataAsJSON(bookmarks, { url, headers })
+  }
+
+  /**
    * Save a bookmark.
    * @param {string} id The Bookmark ID.
    * @param {object} data Data associated with the bookmark.

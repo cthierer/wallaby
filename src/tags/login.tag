@@ -1,10 +1,10 @@
 <wallaby-login>
-  <a class="button" href="#" onclick={ login } hide={ opts.state.auth }>
+  <a href="#" onclick={ login } hide={ opts.state.auth }>
     <yield>
   </a>
   <div class="user" if={ opts.state.auth }>
     <span class="username">{ opts.state.auth.username }</span>
-    <a class="button" href="#" onclick={ logout }>logout</a>
+    <a href="#" onclick={ logout }>logout</a>
   </div>
   <script type="es6">
     this.loginWindow = null
