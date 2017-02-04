@@ -6,6 +6,12 @@ import Promise from 'bluebird'
 import { getDataAsJSON, postDataAsJSON, putDataAsJSON, deleteData } from './modules/data/http'
 
 /**
+ * Default options for listing bookmarks.
+ * @type {object}
+ */
+const DEFAULT_BOOKMARK_OPTIONS = { page: 1, limit: 10, filter: {} }
+
+/**
  * Treat the client as a singleton - this is the initialized instance.
  */
 let client = null
@@ -84,6 +90,14 @@ class WallabyClient {
   }
 
   /**
+   * Full URL to the collections endpoint on the API.
+   * @property {string}
+   */
+  get collectionsUri() {
+    return this._buildUri(this._config.endpoints.collections)
+  }
+
+  /**
    * Ping the session endpoint to extend the user's session.
    * @param {object} auth
    * @returns {boolean} Whether or not the session is still active.
@@ -121,10 +135,10 @@ class WallabyClient {
    * @returns {object} Result of the API call, including a `result` attribute
    *  with an array of Bookmarks.
    */
-  async getBookmarks(auth, page = 1, limit = 10) {
+  async getBookmarks(auth, { page, limit, filter } = DEFAULT_BOOKMARK_OPTIONS) {
     const url = this.bookmarksUri
     const offset = (page - 1) * limit
-    const query = { offset, limit }
+    const query = Object.assign(filter || {}, { offset, limit })
     const headers = _buildHeaders(auth)
 
     return getDataAsJSON({ url, headers, query })
@@ -137,7 +151,7 @@ class WallabyClient {
    */
   async exportBookmarks(auth) {
     const getPage = async (pages = [], page = 1, limit = 10) => {
-      const result = await this.getBookmarks(auth, page, limit)
+      const result = await this.getBookmarks(auth, { page, limit })
       const bookmarks = Array.isArray(result.result) ? result.result : []
 
       if (bookmarks.length < limit) {
@@ -190,6 +204,18 @@ class WallabyClient {
     await deleteData({ url, headers })
 
     return true
+  }
+
+  /**
+   * Get all collections for the user.
+   * @param {object} auth
+   * @returns {object} The result from teh API.
+   */
+  async getCollections(auth) {
+    const url = this.collectionsUri
+    const headers = _buildHeaders(auth)
+
+    return getDataAsJSON({ url, headers })
   }
 
   /**

@@ -17,6 +17,8 @@
           .then((result) => {
             this.notify('info', `Imported ${result.total} bookmark(s).`)
             opts.state.bookmarks = null
+            opts.state.bookmarksFilter = null
+            opts.state.collections = null
             opts.state.trigger('update')
           })
           .catch((err) => {

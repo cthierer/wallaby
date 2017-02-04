@@ -80,6 +80,7 @@
   "dependencies": {
     "bluebird": "^3.4.6",
     "config": "^1.24.0",
+    "form-serialize": "^0.7.1",
     "handlebars": "^4.0.6",
     "kcors": "^2.2.0",
     "koa": "^2.0.0-alpha.7",

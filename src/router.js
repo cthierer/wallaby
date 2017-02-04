@@ -17,6 +17,8 @@ import listBookmarks from './modules/bookmarks/middleware/list'
 import createBookmark from './modules/bookmarks/middleware/create'
 import bookmarkExists from './modules/bookmarks/middleware/exists'
 import removeBookmark from './modules/bookmarks/middleware/remove'
+import listCollections from './modules/collections/middleware/list'
+import createCollection from './modules/collections/middleware/create'
 
 const router = new Router()
 const redis = getClient(config.get('redis.connection'))
@@ -92,7 +94,8 @@ router.get('/bookmarks',
 router.post('/bookmarks/:id',
   catchError(),
   loadUser(redis, config.get('auth.timeout')),
-  createBookmark(redis))
+  createBookmark(redis),
+  createCollection(redis))
 
 // delete an existing bookmark
 router.delete('/bookmarks/:id',
@@ -100,5 +103,15 @@ router.delete('/bookmarks/:id',
   loadUser(redis, config.get('auth.timeout')),
   bookmarkExists(redis),
   removeBookmark(redis))
+
+/* ****************************************************************************
+ * Collections
+ * ****************************************************************************/
+
+// get all collections
+router.get('/collections',
+  catchError(),
+  loadUser(redis, config.get('auth.timeout')),
+  listCollections(redis))
 
 export default router

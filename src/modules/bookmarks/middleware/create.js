@@ -20,7 +20,7 @@ import BookmarkValidator from '../bookmark-validator'
  * @returns {function} The middleware function.
  */
 function initCreate(redis) {
-  return async function createBookmark(ctx) {
+  return async function createBookmark(ctx, next) {
     const id = new Validator(ctx.params.id)
       .exists()
       .get()
@@ -56,6 +56,8 @@ function initCreate(redis) {
       status: 'ok',
       result: data
     }
+
+    return next()
   }
 }
 

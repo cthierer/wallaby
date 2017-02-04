@@ -23,3 +23,4 @@ Changelog
 * Import and export bookmarks through the web UI and API.
 * Validate user inputs, and handle validation failures by sending the
   appropriate HTTP status.
+* Group and filter bookmarks by collections.

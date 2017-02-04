@@ -2,7 +2,9 @@
  * @module wallaby/modules/bookmarks/middleware/list
  */
 
+import Promise from 'bluebird'
 import { userHistory, userBookmarks } from '../data-keys'
+import { collectionMembers } from '../../collections/data-keys'
 import Validator from '../../core/validator'
 import UserValidator from '../../auth/user-validator'
 
@@ -21,6 +23,7 @@ import UserValidator from '../../auth/user-validator'
  *  include on a single page.
  * @param {integer} [defaultOffset=0] The default offset to use.
  * @returns {function} The middleware function.
+ * @todo Refactor and cleanup filtering queries.
  */
 function initList(redis, defaultLimit = 10, defaultOffset = 0) {
   return async function listBookmarks(ctx) {
@@ -33,10 +36,24 @@ function initList(redis, defaultLimit = 10, defaultOffset = 0) {
       .isNumber()
       .isPositiveOrZero()
       .get()
+    const collection = ctx.query.collection
 
     const limitIdx = offset + (limit - 1)
-    const bookmarkIds = await redis.zrevrangeAsync(userHistory(user), offset, limitIdx)
-    const total = await redis.hlenAsync(userBookmarks(user))
+    // TODO reduce branching logic - break into multiple paths based on filter
+    const filtered = collection
+      ? await redis.smembersAsync(collectionMembers(user, collection))
+      : await redis.zrevrangeAsync(userHistory(user), offset, limitIdx)
+    const total = collection
+      ? filtered.length
+      : await redis.hlenAsync(userBookmarks(user))
+    // TODO optimize ordering bookmark IDs for filtered bookmarks
+    const bookmarkIds = collection
+      ? (await Promise.reduce(filtered, async (ordered, id) => {
+        const rank = await redis.zrevrankAsync(userHistory(user), id)
+        ordered[rank] = id
+        return ordered
+      }, [])).filter(id => id !== undefined && id !== null).slice(offset, limitIdx + 1)
+      : filtered
 
     if (bookmarkIds && bookmarkIds.length) {
       const bookmarks = await redis.hmgetAsync(userBookmarks(user), bookmarkIds)

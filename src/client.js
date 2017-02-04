@@ -2,6 +2,7 @@
 
 import riot from 'riot/riot'
 import moment from 'moment'
+import serialize from 'form-serialize'
 import initCore from './modules/core/tags/init'
 import getClient from './wallaby'
 
@@ -93,6 +94,7 @@ getClient('API_CONFIG_URL')
     riot.mixin({ wallaby: client })
     riot.mixin({ notify })
     riot.mixin('moment', moment)
+    riot.mixin('serialize', serialize)
 
     await initCore(riot)
 

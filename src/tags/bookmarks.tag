@@ -21,6 +21,7 @@
     this.loading = false
 
     this.loadBookmarks = () => {
+      const filter = opts.state.bookmarksFilter || {}
       opts.state.bookmarks = null
 
       // only load bookmarks if logged in
@@ -29,7 +30,7 @@
       }
 
       this.loading = true
-      this.wallaby.getBookmarks(opts.state.auth)
+      this.wallaby.getBookmarks(opts.state.auth, { filter })
         .then((bookmarks) => {
           opts.state.bookmarks = bookmarks.result
           this.update()

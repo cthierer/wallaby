@@ -24,7 +24,8 @@
     "endpoints": {
       "config": "/config",
       "sessions": "/sessions",
-      "bookmarks": "/bookmarks"
+      "bookmarks": "/bookmarks",
+      "collections": "/collections"
     },
     "app_src": "/scripts/wallaby.js",
     "rocket_uri": "https://read.marvel.com/#/book"
