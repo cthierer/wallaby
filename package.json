@@ -1,6 +1,6 @@
 {
   "name": "wallaby",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "bookmarklet to save where you left off in digital comics",
   "main": "app/index.js",
   "scripts": {
