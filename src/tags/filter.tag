@@ -7,7 +7,7 @@
       </label>
       <select id="filterCollection" name="collection" onchange={ updateFilter }>
         <option value="" default>all</option>
-        <option each={ opts.state.collections } value={ key } selected={ parent.opts.state.bookmarksFilter.collection === key }>
+        <option each={ opts.state.collections } value={ key } selected={ isActiveFilter('collection', key) }>
           { title }
         </option>
       </select>
@@ -17,6 +17,11 @@
     const serialize = riot.mixin('serialize')
 
     this.loading = false
+
+    this.isActiveFilter = (field, value) => {
+      const currentFilter = opts.state.bookmarksFilter || {}
+      return currentFilter[field] && currentFilter[field] === value
+    }
 
     this.loadCollections = () => {
       this.loading = true

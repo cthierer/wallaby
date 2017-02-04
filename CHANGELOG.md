@@ -6,6 +6,7 @@ Changelog
 ### Bugs
 
 * Deleting a bookmark did not remove it from collections. (api)
+* Console error when rendering collections filter dropdown. (client)
 
 ## 1.1.0 / 2017-02-04
 
