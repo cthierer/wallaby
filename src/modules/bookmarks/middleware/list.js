@@ -3,7 +3,6 @@
  */
 
 import { userHistory, userBookmarks } from '../data-keys'
-import { toAppModel } from '../data-utils'
 
 /**
  * Initialize middleware to list Bookmarks.
@@ -26,19 +25,24 @@ function initList(redis, defaultLimit = 10, defaultOffset = 0) {
   return async function listBookmarks(ctx) {
     const limit = Number.parseInt(ctx.query.limit) || defaultLimit
     const offset = Number.parseInt(ctx.query.offset) || defaultOffset
+    const limitIdx = offset + (limit - 1)
     const user = ctx.state.user
 
     if (!user) {
       throw new Error('missing user')
     }
 
-    const bookmarkIds = await redis.zrevrangeAsync(userHistory(user),
-      offset >= 0 ? offset : defaultOffset, limit > 0 ? (limit - 1) : defaultLimit)
+    const bookmarkIds = await redis.zrevrangeAsync(userHistory(user), offset, limitIdx)
     const total = await redis.hlenAsync(userBookmarks(user))
 
     if (bookmarkIds && bookmarkIds.length) {
       const bookmarks = await redis.hmgetAsync(userBookmarks(user), bookmarkIds)
-      const result = toAppModel(bookmarks)
+      const result = bookmarks
+        .map(bookmarkStr => JSON.parse(bookmarkStr))
+        .map(bookmark => Object.assign(bookmark, {
+          page: bookmark.page + 1,
+          panel: bookmark.panel + 1
+        }))
 
       ctx.body = {
         status: 'ok',

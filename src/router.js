@@ -13,8 +13,6 @@ import createSession from './modules/auth/middleware/create-session'
 import removeSession from './modules/auth/middleware/remove-session'
 import loadUser from './modules/auth/middleware/load-user'
 import listBookmarks from './modules/bookmarks/middleware/list'
-import exportBookmarks from './modules/bookmarks/middleware/export'
-import importBookmarks from './modules/bookmarks/middleware/import'
 import createBookmark from './modules/bookmarks/middleware/create'
 import bookmarkExists from './modules/bookmarks/middleware/exists'
 import removeBookmark from './modules/bookmarks/middleware/remove'
@@ -87,16 +85,6 @@ router.delete('/sessions',
 router.get('/bookmarks',
   loadUser(redis, config.get('auth.timeout')),
   listBookmarks(redis))
-
-// export all bookmarks
-router.get('/bookmarks/export',
-  loadUser(redis, config.get('auth.timeout')),
-  exportBookmarks(redis))
-
-// import bookmarks
-router.post('/bookmarks/import',
-  loadUser(redis, config.get('auth.timeout')),
-  importBookmarks(redis))
 
 // create a new bookmark
 router.post('/bookmarks/:id',

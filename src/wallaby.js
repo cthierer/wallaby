@@ -2,6 +2,7 @@
  * @module wallaby/wallaby
  */
 
+import Promise from 'bluebird'
 import { getDataAsJSON, postDataAsJSON, putDataAsJSON, deleteData } from './modules/data/http'
 
 /**
@@ -120,11 +121,13 @@ class WallabyClient {
    * @returns {object} Result of the API call, including a `result` attribute
    *  with an array of Bookmarks.
    */
-  async getBookmarks(auth) {
+  async getBookmarks(auth, page = 1, limit = 10) {
     const url = this.bookmarksUri
+    const offset = (page - 1) * limit
+    const query = { offset, limit }
     const headers = _buildHeaders(auth)
 
-    return getDataAsJSON({ url, headers })
+    return getDataAsJSON({ url, headers, query })
   }
 
   /**
@@ -133,10 +136,18 @@ class WallabyClient {
    * @returns {array} Result of the API call: an array of bookmark objects.
    */
   async exportBookmarks(auth) {
-    const url = `${this.bookmarksUri}/export`
-    const headers = _buildHeaders(auth)
+    const getPage = async (pages = [], page = 1, limit = 10) => {
+      const result = await this.getBookmarks(auth, page, limit)
+      const bookmarks = Array.isArray(result.result) ? result.result : []
 
-    return getDataAsJSON({ url, headers })
+      if (bookmarks.length < limit) {
+        return pages.concat(bookmarks)
+      }
+
+      return getPage(pages.concat(bookmarks), page + 1, limit)
+    }
+
+    return getPage()
   }
 
   /**
@@ -147,10 +158,8 @@ class WallabyClient {
    *  enumerating the number of boomkarks imported.
    */
   async importBookmarks(auth, bookmarks) {
-    const url = `${this.bookmarksUri}/import`
-    const headers = _buildHeaders(auth)
-
-    return postDataAsJSON(bookmarks, { url, headers })
+    return Promise.map(bookmarks, bookmark => this.saveBookmark(bookmark.id, bookmark, auth))
+      .then(results => new Object({ total: results.length })) // eslint-disable-line no-new-object
   }
 
   /**
