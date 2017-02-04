@@ -1,0 +1,64 @@
+{
+  "id": "https://wallaby.builds.solutions/schemas/bookmark.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "bookmark",
+  "type": "object",
+  "properties": {
+    "id": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        }
+      ]
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type" :"string"
+        },
+        "image": {
+          "type": "string",
+          "format": "uri"
+        },
+        "site_name": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "additionalProperties": true,
+      "required": ["title"]
+    },
+    "page": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "panel": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 0
+    },
+    "smartPanel": {
+      "type": "boolean",
+      "default": true
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false,
+  "required": ["page"]
+}

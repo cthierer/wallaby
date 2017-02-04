@@ -3,6 +3,9 @@
  */
 
 import { userHistory, userBookmarks } from '../data-keys'
+import Validator from '../../core/validator'
+import UserValidator from '../../auth/user-validator'
+import BookmarkValidator from '../bookmark-validator'
 
 /**
  * Initialize middleware to create a new Bookmark.
@@ -15,24 +18,23 @@ import { userHistory, userBookmarks } from '../data-keys'
  *
  * @param {object} redis Initialized Redis client.
  * @returns {function} The middleware function.
- * @todo Validate the parsed body JSON structure.
  */
 function initCreate(redis) {
   return async function createBookmark(ctx) {
-    const id = ctx.params.id
-    const raw = ctx.request.body || {}
+    const id = new Validator(ctx.params.id)
+      .exists()
+      .get()
+    const user = new UserValidator(ctx.state.user)
+      .isComplete()
+      .get()
+    const raw = new BookmarkValidator(ctx.request.body || {}, 'bookmark')
+      .exists()
+      .matchesSchema()
+      .get()
+
     const updatedAt = raw.updatedAt || (new Date()).toISOString()
     const timestamp = Date.parse(updatedAt) || Date.now()
     const data = Object.assign({}, raw, { id, updatedAt })
-    const user = ctx.state.user
-
-    if (!id) {
-      throw new Error('missing ID parameter')
-    }
-
-    if (!user) {
-      throw new Error('missing user')
-    }
 
     await Promise.all([
       /*

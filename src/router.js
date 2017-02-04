@@ -5,6 +5,7 @@
 import Router from 'koa-router'
 import config from 'config'
 import getClient from './modules/data/client'
+import catchError from './modules/core/middleware/catch-error'
 import initOauth from './modules/auth/middleware/oauth-init'
 import getToken from './modules/auth/middleware/oauth-callback-github'
 import lookupUser from './modules/auth/middleware/lookup-user-github'
@@ -83,16 +84,19 @@ router.delete('/sessions',
 
 // get all bookmarks (paginated)
 router.get('/bookmarks',
+  catchError(),
   loadUser(redis, config.get('auth.timeout')),
   listBookmarks(redis))
 
 // create a new bookmark
 router.post('/bookmarks/:id',
+  catchError(),
   loadUser(redis, config.get('auth.timeout')),
   createBookmark(redis))
 
 // delete an existing bookmark
 router.delete('/bookmarks/:id',
+  catchError(),
   loadUser(redis, config.get('auth.timeout')),
   bookmarkExists(redis),
   removeBookmark(redis))

@@ -21,3 +21,5 @@ Changelog
 * Store and return "updatedAt" value with bookmarks. This string tracks the
   date and time that the bookmark was last updated.
 * Import and export bookmarks through the web UI and API.
+* Validate user inputs, and handle validation failures by sending the
+  appropriate HTTP status.

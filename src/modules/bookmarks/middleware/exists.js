@@ -3,6 +3,8 @@
  */
 
 import { userBookmarks } from '../data-keys'
+import Validator from '../../core/validator'
+import UserValidator from '../../auth/user-validator'
 
 /**
  * Initialize middleware to check if a Bookmark exists.
@@ -19,16 +21,8 @@ import { userBookmarks } from '../data-keys'
  */
 function initExists(redis) {
   return async function bookmarkExists(ctx, next) {
-    const id = ctx.params.id
-    const user = ctx.state.user
-
-    if (!id) {
-      throw new Error('missing ID parameter')
-    }
-
-    if (!user) {
-      throw new Error('missing user')
-    }
+    const id = new Validator(ctx.params.id, 'id').exists().get()
+    const user = new UserValidator(ctx.state.user, 'user').isComplete().get()
 
     const exists = await redis.hexistsAsync(userBookmarks(user), id)
 

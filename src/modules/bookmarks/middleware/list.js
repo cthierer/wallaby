@@ -3,6 +3,8 @@
  */
 
 import { userHistory, userBookmarks } from '../data-keys'
+import Validator from '../../core/validator'
+import UserValidator from '../../auth/user-validator'
 
 /**
  * Initialize middleware to list Bookmarks.
@@ -19,19 +21,20 @@ import { userHistory, userBookmarks } from '../data-keys'
  *  include on a single page.
  * @param {integer} [defaultOffset=0] The default offset to use.
  * @returns {function} The middleware function.
- * @todo Enhance input parameter validation.
  */
 function initList(redis, defaultLimit = 10, defaultOffset = 0) {
   return async function listBookmarks(ctx) {
-    const limit = Number.parseInt(ctx.query.limit) || defaultLimit
-    const offset = Number.parseInt(ctx.query.offset) || defaultOffset
+    const user = new UserValidator(ctx.state.user, 'user').isComplete().get()
+    const limit = new Validator(Number.parseInt(ctx.query.limit) || defaultLimit)
+      .isNumber()
+      .isPositiveOrZero()
+      .get()
+    const offset = new Validator(Number.parseInt(ctx.query.offset) || defaultOffset)
+      .isNumber()
+      .isPositiveOrZero()
+      .get()
+
     const limitIdx = offset + (limit - 1)
-    const user = ctx.state.user
-
-    if (!user) {
-      throw new Error('missing user')
-    }
-
     const bookmarkIds = await redis.zrevrangeAsync(userHistory(user), offset, limitIdx)
     const total = await redis.hlenAsync(userBookmarks(user))
 

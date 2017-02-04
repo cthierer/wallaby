@@ -3,6 +3,8 @@
  */
 
 import { userHistory, userBookmarks } from '../data-keys'
+import Validator from '../../core/validator'
+import UserValidator from '../../auth/user-validator'
 
 /**
  * Initialize middleware to remove a Bookmark from the datastore.
@@ -18,16 +20,8 @@ import { userHistory, userBookmarks } from '../data-keys'
  */
 function initRemove(redis) {
   return async function removeBookmark(ctx) {
-    const id = ctx.params.id
-    const user = ctx.state.user
-
-    if (!id) {
-      throw new Error('missing ID parameter')
-    }
-
-    if (!user) {
-      throw new Error('missing user')
-    }
+    const id = new Validator(ctx.params.id, 'id').exists().get()
+    const user = new UserValidator(ctx.state.user, 'user').isComplete().get()
 
     await Promise.all([
       redis.hdelAsync(userBookmarks(user), id),
