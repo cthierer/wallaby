@@ -13,13 +13,13 @@ import UserValidator from '../../auth/user-validator'
  * as a named parameter (`id`), and for the `user` object to be loaded on
  * the `ctx.state`.
  *
- * On success, sets a 204 status and ends the request chain.
+ * On success, sets a 204 status.
  *
  * @param {object} redis Initialized Redis client.
  * @returns {function} The middleware function.
  */
 function initRemove(redis) {
-  return async function removeBookmark(ctx) {
+  return async function removeBookmark(ctx, next) {
     const id = new Validator(ctx.params.id, 'id').exists().get()
     const user = new UserValidator(ctx.state.user, 'user').isComplete().get()
 
@@ -29,6 +29,8 @@ function initRemove(redis) {
     ])
 
     ctx.status = 204
+
+    return next()
   }
 }
 

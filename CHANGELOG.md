@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## UNRELEASED
+
+### Bugs
+
+* Deleting a bookmark did not remove it from collections. (api)
+
 ## 1.1.0 / 2017-02-04
 
 ### Configuration
