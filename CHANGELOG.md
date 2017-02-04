@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## [UNRELEASED]
+## 1.1.0 / 2017-02-04
 
 ### Configuration
 
